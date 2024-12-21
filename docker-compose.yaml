@@ -1,0 +1,6 @@
+services:
+  mywebsite:
+    image: testing-angular-app 
+    restart: always
+    ports:
+      - 8040:80
