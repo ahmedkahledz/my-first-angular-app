@@ -3,23 +3,17 @@ pipeline {
 
     environment {
         // Define environment variables
-        IMAGE_NAME = 'ahmedkhaled28/my-angular-website'  
-        DOCKER_TAG = 'latest'  
+        DOCKERHUB_CREDENTIALS = 'dockerhub-creds'  // Jenkins credential ID for DockerHub credentials
+        IMAGE_NAME = 'your-dockerhub-username/your-image-name'  // Replace with your DockerHub username and image name
+        DOCKER_TAG = 'latest'  // You can customize the tag (e.g., use the Git commit hash or build number)
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the code from the Git repository
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("${ahmedkhaled28/my-angular-website}:${latest}")
+                    docker.build("${IMAGE_NAME}:${DOCKER_TAG}")
                 }
             }
         }
@@ -39,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Push the Docker image to DockerHub
-                    sh "docker push ${ahmedkhaled28/my-angular-website}:${latest}"
+                    sh "docker push ${IMAGE_NAME}:${DOCKER_TAG}"
                 }
             }
         }
@@ -62,4 +56,3 @@ pipeline {
         }
     }
 }
-
