@@ -8,18 +8,11 @@ pipeline {
     }
 
     stages {
-       // stage('Checkout Code') {
-      //      steps {
-                // Checkout the repository
-             //   git 'https://github.com/ahmedkahledz/my-first-angular-app.git'
-     //       }
-       // }
-
         stage('Build Docker Image') {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
         }
@@ -29,8 +22,10 @@ pipeline {
                 script {
                     // Use Jenkins credentials for Docker login
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                       
-                        docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}").push()
+                        sh """
+                        echo \$PASSWORD | docker login -u \$USERNAME --password-stdin
+                        docker image push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
+                        """
                     }
                 }
             }
@@ -38,10 +33,10 @@ pipeline {
 
         stage('Deploy') {
             steps {
-               script {
-                    sh 'docker run -d -p 8000:80 --name jenkinsassignments1 ahmeedkhaleed28/angular-app:jenkinsassignments1'
-                  }
-             }
+                script {
+                    sh 'docker run -d -p 8000:80 --name jenkinsassignments1 ahmedkhaled28/angular-app:jenkinsassignments1'
+                }
+            }
         }
 
     }
@@ -52,4 +47,3 @@ pipeline {
         }
     }
 }
-
