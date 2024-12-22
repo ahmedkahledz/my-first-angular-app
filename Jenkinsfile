@@ -27,8 +27,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Log in to Docker registry (optional if public)
-                    withDockerRegistry([credentialsId: 'dockerhub_P', url: 'https://index.docker.io/v1/']) {
+                    // Use Jenkins credentials for Docker login
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub_P', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                         docker.image("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}").push()
                     }
                 }
@@ -38,7 +39,7 @@ pipeline {
         stage('Deploy') {
             steps {
                script {
-                    sh 'docker run -d -p 8000:3000 --name my-app michaelemad/myrepo:jenkinsassignments1'
+                    sh 'docker run -d -p 8000:80 --name jenkinsassignments1 ahmeedkhaleed28/angular-app:jenkinsassignments1'
                   }
              }
         }
@@ -46,17 +47,9 @@ pipeline {
     }
 
     post {
-        always {
-            // Clean up Docker images after build
-            sh 'docker system prune -f'
-        }
-
         success {
             echo 'Build and Dockerize successful!'
         }
-
-        failure {
-            echo 'Build failed, check the logs.'
-        }
     }
 }
+
