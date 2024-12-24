@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build("${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}")
+                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh """
                         echo \$PASSWORD | docker login -u \$USERNAME --password-stdin
-                        docker image push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}:${DOCKER_TAG}
+                        docker image push ${DOCKER_IMAGE}:${DOCKER_TAG}
                         """
                     }
                 }
@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -d -p 8000:80 --name jenkinsassignments1 ahmedkhaled28/angular-app:jenkinsassignments1'
+                    sh 'docker run -d -p 8080:80 --name jenkinsassignment1 ahmedkhaled28/angular-app:jenkinsassignments1'
                 }
             }
         }
