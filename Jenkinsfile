@@ -34,11 +34,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker run -d -p 8081:80 --name jenkinsassignment1 ahmedkhaled28/angular-app:jenkinsassignments1'
+                    sh """
+                    docker run -d -p 8080:80 --name jenkinsassignment1 ${DOCKER_IMAGE}:${DOCKER_TAG}
+                    """
                 }
             }
         }
-
     }
 
     post {
