@@ -1,59 +1,90 @@
-# Last
+Jenkins Pipeline for Angular App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.1.
+This repository demonstrates how to automate the build and deployment of an Angular application using Jenkins and Docker. The Jenkins pipeline is configured to build the application, package it into a Docker image, and push the image to Docker Hub.
 
-## Development server
+Table of Contents
 
-To start a local development server, run:
+Project Overview
 
-```bash
-ng serve
-```
+Prerequisites
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Pipeline Setup
 
-## Code scaffolding
+Jenkinsfile
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Repository URL
 
-```bash
-ng generate component component-name
-```
+Project Overview
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+This project involves automating the build and deployment of a simple Angular application using a Jenkins pipeline. The pipeline performs the following steps:
 
-```bash
-ng generate --help
-```
+Clones the repository from GitHub.
 
-## Building
+Builds the Angular application.
 
-To build the project run:
+Packages the application into a Docker image.
 
-```bash
-ng build
-```
+Pushes the Docker image to Docker Hub.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Prerequisites
 
-## Running unit tests
+Before setting up the Jenkins pipeline, ensure the following:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Jenkins is installed and configured.
 
-```bash
-ng test
-```
+Docker is installed and the Docker daemon is running.
 
-## Running end-to-end tests
+A Docker Hub account with valid credentials.
 
-For end-to-end (e2e) testing, run:
+GitHub repository containing the Angular application and Dockerfile.
 
-```bash
-ng e2e
-```
+Pipeline Setup
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Follow these steps to configure the Jenkins pipeline:
 
-## Additional Resources
+Push the Repository
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Ensure the Angular application and the Dockerfile are pushed to a GitHub repository.
+
+Create a New Pipeline
+
+Log in to Jenkins.
+
+Click on New Item.
+
+Choose Pipeline as the project type.
+
+Name the pipeline as jenkins-assignment.
+
+Configure the Pipeline
+
+Under the Pipeline section, select Pipeline script from SCM.
+
+Set the SCM to Git.
+
+Provide the repository URL: https://github.com/ahmedkahledz/simple-angular-app.
+
+Add the credentials for Docker Hub to enable Jenkins to push the Docker image.
+
+Specify the Jenkinsfile path in the repository: jenkinsfile.
+
+Run the Pipeline
+
+Save the pipeline configuration.
+
+Trigger the pipeline to build, package, and push the Docker image.
+
+Jenkinsfile
+
+The jenkinsfile in this repository contains the pipeline definition, which automates the entire process of building and deploying the Angular application. Ensure the file is correctly located in the root directory of the repository.
+
+Repository URL
+
+The GitHub repository for this project is located at:
+https://github.com/ahmedkahledz/simple-angular-app
+
+Notes
+
+Make sure to update the Docker Hub credentials in Jenkins whenever they change.
+
+Ensure that the Dockerfile is properly configured to build the Angular application.
